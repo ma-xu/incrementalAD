@@ -1,0 +1,36 @@
+Nice Fault injection - lables:
+0-Normal
+1-Memory Failure
+2-CPU Failure (Core 0)
+3-CPU Failure (Core 1)
+4-CPU Failure (Core 2)
+5-CPU Failure (Core 3)
+6-CPU Failure (Core 4)
+7-CPU Failure (Core 5)
+8-CPU Failure (Core 6)
+9-CPU Failure (Core 7)
+10-Network Failure
+11-Disk Failure
+12-CPU System Failure (Core 0)
+13-CPU System Failure (Core 1)
+14-CPU System Failure (Core 2)
+15-CPU System Failure (Core 3)
+16-CPU System Failure (Core 4)
+17-CPU System Failure (Core 5)
+18-CPU System Failure (Core 6)
+19-CPU System Failure (Core 7)
+
+
+Coarse Fault injection - labels:
+0-Normal
+1-Memory Failure
+2-CPU Failure
+3-Network Failure
+4-Disk Failure
+
+
+Benchmark: (backgroup applications)
+0-EP
+1-IS
+2-CG
+3-MG
