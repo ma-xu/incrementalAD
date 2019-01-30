@@ -1,0 +1,10 @@
+Data description:
+
+Data is a structure, including two fields:
+label: has 4 different labels
+	0:normal
+	1:error
+	2:error
+	3:error
+	4: disk error
+data:
