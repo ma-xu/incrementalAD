@@ -1,7 +1,7 @@
 function runLS_ILDA()
 %test of ILDA
 chunksize = 5;
-load('E:\research\LS-ILDA\ORL_3parts.mat')
+load('/home/xuma/Desktop/incrementalAD/LS-ILDA/ORL_3parts.mat')
 n = size(X_org,2);
 [d, b] = size(X_inc);
 
