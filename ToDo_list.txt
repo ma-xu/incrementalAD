@@ -1,0 +1,8 @@
+1. Implement incremental LDA
+2. Implement incremental SVM
+3. Kernel SVM
+4. SMOTE
+5. Hard Negative Mining, improve Recall
+6. Plot incremental Accuracy for each step
+7. Compare
+8. 1 error vs 4 error
