@@ -1,5 +1,5 @@
 
-clear;clc;
+clear;clc;close all;
 run('../load_data');
 clear train_data train_label;
 data = test_data;
@@ -22,10 +22,9 @@ lr=0.1;
 batch_size=300;
 
 %w=rand(size(train_data,2)+1,1);
-w= unifrnd(-1,1,size(train_data,2)+1,1);
+w= unifrnd(-1,1,size(train_data,2),1);
 w=w/norm(w);
-e_test = ones(size(test_data,1),1);
-test_data=[test_data e_test];
+
 
 pred_label = double(test_data*w>0);
 pred_label(pred_label==0,:)=-1;
@@ -37,11 +36,11 @@ ends = batch_size*(1:parts)';
 ends(end,1)=size(train_data,1);
 
 for i =1:parts
-    i;
+    i
     x=train_data((i-1)*batch_size+1:ends(i,1),:);
     
     y=train_label((i-1)*batch_size+1:ends(i,1),:);
-    [w] = IncreL1LSSVM(x,y,C,w,lr);
+    [w] = L1LS(x,y,C,w,lr);
     %if(mod(i, batch_size) == 0)
        pred_label = double(test_data*w>0);
        pred_label(pred_label==0,:)=-1;
@@ -49,5 +48,5 @@ for i =1:parts
        accuracyList=[accuracyList;accuracy];
     %end
 end
-accuracyList;
-plot(accuracyList)
+accuracyList
+plot(accuracyList,'-');
