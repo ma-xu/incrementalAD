@@ -2,7 +2,6 @@ function [w] = IncreL1LSSVM(X,y,C,w,lr)
 % For more information, read readMe.md
     
     e = ones(size(X,1),1);
-    X=[X e];
     Y = diag(y);
     max_iter=200;
     objVal = norm(w,1)+C*norm(e-Y*X*w);
