@@ -6,3 +6,11 @@
 6. Plot incremental Accuracy for each step
 7. Compare
 8. 1 error vs 4 error
+
+
+An online incremental orthogonal component analysis method for
+dimensionality reduction
+
+Online robust principal component analysis via truncated nuclear norm regularization
+
+https://github.com/flatironinstitute/online_psp_matlab
