@@ -1,4 +1,5 @@
 % Load data;
+close all;
 clear;clc;
 run('../load_data');
 clear train_data train_label;
@@ -22,14 +23,14 @@ train_label = label(1:end-1000,:);
 clear data label e;
 
 % Init parameters.
-C=1;
+use_kernel = 0;
+C=10;
 lr=0.1;
 batch_size=100;
 accuracyList=[];
 %w=rand(size(train_data,2)+1,1);
-w= unifrnd(-1,1,size(train_data,2)+1,1);
-w= unifrnd(-1,1,batch_size,1);
-w=w/norm(w);
+w= unifrnd(-1,1,size(train_data,2),1);
+
 
 
 % pred_label = double(test_data*w>0);
@@ -41,18 +42,25 @@ parts=ceil(size(train_data,1)/batch_size);
 ends = batch_size*(1:parts)';
 ends(end,1)=size(train_data,1);
 
-options.KernelType = 'Gaussian';
-options.t = 2.5;
-options.d = 1.1;
-x_init = train_data((1-1)*batch_size+1:ends(1,1),:);
-test_data = constructKernel(test_data,x_init,options);
+if use_kernel==1
+    options.KernelType = 'Gaussian';
+    options.t = 2;
+    options.d = 1.1;
+    x_init = train_data((1-1)*batch_size+1:ends(1,1),:);
+    test_data = constructKernel(test_data,x_init,options);
+    w= unifrnd(-1,1,batch_size,1);
+end
+w=w/norm(w);
 for i =1:parts
     i
     x=train_data((i-1)*batch_size+1:ends(i,1),:);
-    x = constructKernel(x,x_init,options);
+   
+    if use_kernel==1
+        x = constructKernel(x,x_init,options);
+    end
     
     y=train_label((i-1)*batch_size+1:ends(i,1),:);
-    [w] = IncreL1LSSVM(x,y,C,w,lr);
+    [w] = L1LSSVM(x,y,C,w,lr);
     %if(mod(i, batch_size) == 0)
        
        pred_label = double(test_data*w>0);
