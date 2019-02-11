@@ -1,11 +1,12 @@
-1. Implement incremental LDA
-2. Implement incremental SVM
-3. Kernel SVM
+1. Implement incremental LDA //Done, using L1LSSVM or L1LS
+2. Implement incremental SVM //Done, using L1LSSVM or L1LS
+3. Kernel SVM  // Not good 
 4. SMOTE
 5. Hard Negative Mining, improve Recall
 6. Plot incremental Accuracy for each step
 7. Compare
 8. 1 error vs 4 error
+9. step size. // try repeat when size>1
 
 
 An online incremental orthogonal component analysis method for
