@@ -26,7 +26,7 @@ clear data label e;
 use_kernel = 0;
 C=10;
 lr=0.1;
-batch_size=100;
+batch_size=300;
 accuracyList=[];
 %w=rand(size(train_data,2)+1,1);
 w= unifrnd(-1,1,size(train_data,2),1);
