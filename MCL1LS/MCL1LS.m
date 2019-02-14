@@ -33,7 +33,7 @@ function [W] = MCL1LS(X,Y,C,W,lr)
                 continue;
             end
             if lr <1e-7
-               iter= max_iter-3;
+               iter= max_iter;
             end
             objValList=[objValList;objVal_new];
             Diff=abs(objVal-objVal_new);
