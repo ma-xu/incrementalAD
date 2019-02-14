@@ -34,6 +34,9 @@ function [w] = L1LSSVM(X,y,C,w,lr)
                 lr=lr/10;
                 continue;
             end
+            if lr <1e-7
+               iter= max_iter-3;
+            end
             objValList=[objValList;objVal_new];
             Diff=abs(objVal-objVal_new);
             objVal=objVal_new;

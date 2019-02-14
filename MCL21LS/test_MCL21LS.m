@@ -45,7 +45,7 @@ for i =1:parts
     x=train_data((i-1)*batch_size+1:ends(i,1),:);
     
     y=train_label((i-1)*batch_size+1:ends(i,1),:);
-    [W] = MCL1LS(x,y,C,W,lr);
+    [W] = MCL21LS(x,y,C,W,lr);
     %if(mod(i, batch_size) == 0)
        pred_label = double(test_data*W>0);
        vector_pred_label = convert_vector(pred_label);
