@@ -1,7 +1,9 @@
-function [w] = L1LS(X,Y,C,w,lr)
-    %min 0.5*||Y-Xw||^2+C*||w||_1
+function [W] = MCL21LS(X,Y,C,W,lr)
+    %min 0.5*||Y-XW||^2+C*||W||_2,1
     %derivation:
-    % -2X'*(Y-Xw)+C*sign(w)
+    %derivate:
+    
+    % -2X'*(Y-XW)+C*sign(W)
     
     repeat_time=10;
     X_copy = X;
@@ -17,19 +19,18 @@ function [w] = L1LS(X,Y,C,w,lr)
     
         max_iter=200;
         epsion = 1e-7;  
-        objVal = norm(Y-X*w)^2+C*norm(w,1);
+        objVal = norm(Y-X*W)^2+C*norm(W,1);
         Diff = inf;
         iter=1;
         objValList=[objVal];
 
         while Diff>1e-4 && iter<max_iter
-            w(w==0,:)=epsion;
-            derivation = -2*X'*(Y-X*w)+C*sign(w);
+            derivation = -2*X'*(Y-X*W)+C*sign(W);
             derivation=derivation/norm(derivation);
-            w=w-lr*derivation;
-            objVal_new = norm(Y-X*w)^2+C*norm(w,1);
+            W=W-lr*derivation;
+            objVal_new = norm(Y-X*W)^2+C*norm(W,1);
             if objVal_new>objValList(end,1) && lr >1e-7
-                w=w+lr*derivation;
+                W=W+lr*derivation;
                 lr=lr/10;
                 continue;
             end
