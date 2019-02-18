@@ -21,7 +21,7 @@ clear data label;
 
 
 %label(label==-1)=2;
-C=1;
+C=20;
 lr=0.1;
 batch_size=100;
 
@@ -55,3 +55,7 @@ for i =1:parts
 end
 accuracyList
 plot(accuracyList,'-');
+
+%validate the row sparsity
+vector_W = sum(abs(W).^2,2).^(1/2);
+sorted_vector_W = sort(vector_W,'descend')
