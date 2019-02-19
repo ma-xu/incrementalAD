@@ -1,6 +1,6 @@
 function [w] = L1LSSVM(X,y,C,w,lr)
 % For more information, read readMe.md
-    repeat_time=10;
+    repeat_time=20;
     X_copy = X;
     y_copy=y;
     lr_copy=lr;
