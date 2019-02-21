@@ -19,12 +19,12 @@ clear data label;
 %label(label==-1)=2;
 C=1;
 lr=0.1;
-batch_size=100;
+batch_size=500;
 l=10;
 
 %w=rand(size(train_data,2)+1,1);
 W= unifrnd(-1,1,size(train_data,2),l);
-W=W/norm(W);
+%W=W/norm(W);
 
 
 parts=ceil(size(train_data,1)/batch_size);

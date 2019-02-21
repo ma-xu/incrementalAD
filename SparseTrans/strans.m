@@ -9,7 +9,7 @@ function [W] = strans(X,y,W,C,lr)
 %   -2X'*(Y-XW)+C*diag(1/||w1||, 1/||w2||,...,1/||wd||)*W
     l = size(W,2);
     Y=repmat(y,1,l);
-    repeat_time=10;
+    repeat_time=20;
     X_copy = X;
     Y_copy=Y;
     lr_copy=lr;
@@ -35,7 +35,7 @@ function [W] = strans(X,y,W,C,lr)
             D = diag(1/W21_vector);
             W_deri = D*W;
             derivation = -2*X'*(Y-X*W)+C*W_deri;
-            derivation=derivation/norm(derivation);
+            %derivation=derivation/norm(derivation);
             W=W-lr*derivation;
             W21norm=sum(sum(abs(W).^2,2).^(1/2));
             objVal_new = norm(Y-X*W)^2+C*W21norm;
