@@ -4,12 +4,13 @@ run('../load_data_4error');
 data=mapminmax(data');
 data=data';
 
-classes = length(unique(label));%{
+classes = length(unique(label));
+%{
     %PCA
     x_centered = x-mean(x);
     [V,D]=ccipca(x_centered',k,iteration,V,access);
     x=x*V;
-    %}
+%}
 if sum(label==0)>0
     label=label+1;
 end

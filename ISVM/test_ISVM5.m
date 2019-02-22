@@ -1,3 +1,7 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% incremental train svm with smote + ccipca
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 %% Load data.
 clear;clc;close all;
 run('../load_data_4error');
@@ -14,7 +18,7 @@ test_data=data(end-1000+1:end,:);
 test_label = label(end-1000+1:end,:);
 train_data = data(1:end-1000,:);
 train_label = label(1:end-1000,:);
-%clear data label;
+clear data label;
 
 
 %% SMOTE
@@ -47,7 +51,9 @@ train_label=train_label(rand_order,:);
 
 clearvars -except train_label test_label train_data test_data classes
 
-%% Start incremental training
+
+
+%% Initlize parameters
 batch_size=500;
 accuracyList=[];
 train_command=['-q',' -t ',2,'-s',0];
@@ -59,13 +65,46 @@ ends(end,1)=size(train_data,1);
 SV = [];
 SV_label=[];
 SVnumList=[];
+
+%% Initilize the model
+indexs=[];
+for i=1:length(unique(train_label))
+    index=find(train_label==i);
+    selected_index = index(randperm(length(index)));
+    selected_index = selected_index(1:20);
+    indexs=[indexs;selected_index];
+end
+init_x=train_data(indexs,:);
+init_y=train_label(indexs,:);
+
+% ccipca
+k=50; %tranformation dimensions
+iteration=100;
+access=100;
+init_x_centered = init_x-mean(init_x);
+[V,D]=ccipca(init_x_centered',k);
+init_x=init_x*V;
+
+
+model=libsvmtrain(init_y,init_x,train_command);
+SV = init_x(model.sv_indices,:);
+SV_label = init_y(model.sv_indices,:);
+
+%% Start incremental train data
 for i =1:parts
     i
     x=train_data((i-1)*batch_size+1:ends(i,1),:);
     y=train_label((i-1)*batch_size+1:ends(i,1),:);
     
+    SV = SV*pinv(V);
     % add SV into training
     x=[x;SV];
+    % ccipca
+    x_centered = x-mean(x);
+    [V,D]=ccipca(x_centered',k,iteration,V,access);
+    x=x*V;
+    
+    
     y=[y;SV_label];
     rand_order=randperm(size(x,1));
     x=x(rand_order,:);
