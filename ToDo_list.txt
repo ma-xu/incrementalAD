@@ -15,3 +15,11 @@ dimensionality reduction
 Online robust principal component analysis via truncated nuclear norm regularization
 
 https://github.com/flatironinstitute/online_psp_matlab
+
+Meeting Feb/22/2019：
+semi-
+IPCCC 2012 homepage
+(online) problem -> exsiting solution -> proposed method -> contribution
+dataset
+
+
