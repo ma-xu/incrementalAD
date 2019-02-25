@@ -8,6 +8,9 @@ function [W] = MCL21LS(X,Y,C,W,lr)
     % -2X'*(Y-XW)+C*diag(1/||w1||, 1/||w2||,...,1/||wd||)*W
     
     repeat_time=10;
+%     if(size(X,1)<200)
+%         repeat_time = 1;
+%     end
     X_copy = X;
     Y_copy=Y;
     lr_copy=lr;
@@ -51,7 +54,7 @@ function [W] = MCL21LS(X,Y,C,W,lr)
         end
     end
     
-    objValList
+    objValList;
     iter;
     
     

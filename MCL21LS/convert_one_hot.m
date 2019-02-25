@@ -9,9 +9,9 @@ function [Y] = convert_one_hot(y)
         y=y+1;
     end
     
-    classes = length(unique(y));
+    classes = 5;
     num = length(y);
-    Y = zeros(num,classes);
+    Y = -ones(num,classes);
     index=[1:num]';
     %index=[index,y];
     location=sub2ind(size(Y),index,y);

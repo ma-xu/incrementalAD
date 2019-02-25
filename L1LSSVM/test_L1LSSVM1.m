@@ -1,3 +1,7 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Add smote (kernel)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 % Load data;
 close all;
 clear;clc;
@@ -22,9 +26,27 @@ train_data=data(1:end-1000,:);
 train_label = label(1:end-1000,:);
 clear data label e;
 
+% get the rate of each class
+% STA Matrix: unique label; conut;rate;
+STA = tabulate(train_label);
+addpath('../smote');
+disp("Start smote process");
+SMOTE_data = smote(train_data(train_label==-1,:), 1, 2*100);
+SMOTE_label = -ones(size(SMOTE_data,1),1);
+disp("SMOTE completed.");
+
+train_data=[train_data;SMOTE_data;];
+train_label=[train_label;SMOTE_label;];
+% random data order
+rand('state',111);
+rand_order=randperm(size(train_data,1));
+train_data=train_data(rand_order,:);
+train_label=train_label(rand_order,:); 
+
+
 % Init parameters.
 use_kernel = 0;
-C=100;
+C=10;
 lr=0.1;
 batch_size=300;
 accuracyList=[];
@@ -45,11 +67,14 @@ ends(end,1)=size(train_data,1);
 
 if use_kernel==1
     options.KernelType = 'Gaussian';
-    options.t = 2;
-    options.d = 1.1;
-    x_init = train_data((1-1)*batch_size+1:ends(1,1),:);
+    options.t =6;
+    options.d = 2;
+    %x_init = train_data((1-1)*batch_size+1:ends(1,1),:);
+    rand_order=randperm(size(train_data,1));
+    x_init = train_data(rand_order(1:100),:);
     test_data = constructKernel(test_data,x_init,options);
-    w= unifrnd(-1,1,batch_size,1);
+    %w= unifrnd(-1,1,batch_size,1);
+    w= unifrnd(-1,1,size(x_init,1),1);
 end
 w=w/norm(w);
 for i =1:parts
