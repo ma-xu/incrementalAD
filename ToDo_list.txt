@@ -1,12 +1,18 @@
+7. Compare 
+10.plot 2-D (PCA first, then plot)
+11.Recall, Percision, F1-measure
+
+
+
+
 1. Implement incremental LDA //Done, using L1LSSVM or L1LS
 2. Implement incremental SVM //Done, using L1LSSVM or L1LS
 3. Kernel SVM  // Not good 
-4. SMOTE
-5. Hard Negative Mining, improve Recall
-6. Plot incremental Accuracy for each step
-7. Compare
-8. 1 error vs 4 error
-9. step size. // try repeat when size>1
+4. SMOTE   //Done
+5. Hard Negative Mining, improve Recall //Done
+6. Plot incremental Accuracy for each step  //Done
+8. 1 error vs 4 error //Done
+9. step size. // try repeat when size>1 //Done
 
 
 An online incremental orthogonal component analysis method for
