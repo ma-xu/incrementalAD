@@ -3,12 +3,12 @@ clc;
 
 %% Import train_data
 train_dataList=[
-    "Data/mat/20110326.mat";
-    "Data/mat/20110327.mat";
-    "Data/mat/20110328.mat";
-    "Data/mat/20110329.mat";
-    "Data/mat/20110330.mat";
-    "Data/mat/20110331.mat";
+    "../Data/mat/20110326.mat";
+    "../Data/mat/20110327.mat";
+    "../Data/mat/20110328.mat";
+    "../Data/mat/20110329.mat";
+    "../Data/mat/20110330.mat";
+    "../Data/mat/20110331.mat";
 ];
 train_data=[];
 train_label=[];
@@ -31,12 +31,12 @@ clearvars -except train_data train_label;
 
 %% Import test_data
 test_dataList=[
-    "Data/mat/20110925.mat";
-    "Data/mat/20110924.mat";
-    "Data/mat/20110923.mat";
-    "Data/mat/20110922.mat";
-    "Data/mat/20110921.mat";
-    "Data/mat/20110920.mat";
+    "../Data/mat/20110925.mat";
+    "../Data/mat/20110924.mat";
+    "../Data/mat/20110923.mat";
+    "../Data/mat/20110922.mat";
+    "../Data/mat/20110921.mat";
+    "../Data/mat/20110920.mat";
 ];
 test_data=[];
 test_label=[];

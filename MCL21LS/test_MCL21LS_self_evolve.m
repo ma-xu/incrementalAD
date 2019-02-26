@@ -4,7 +4,7 @@
 %   add most possible predict data back to training. 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 clear;clc;close all;
-run('../load_data_4error');
+run('../Tools/load_data_4error');
 data=mapminmax(data');
 data=data';
 classes = length(unique(label));
@@ -24,7 +24,7 @@ clear data label;
 % get the rate of each class
 % STA Matrix: unique label; conut;rate;
 STA = tabulate(train_label);
-addpath('../smote');
+addpath('../Tools/smote');
 disp("Start smote process");
 disp("SMOTE on anomaly type 2");
 SMOTE2 = smote(train_data(train_label==2,:), 1, round(STA(1,2)/STA(2,2)-1)*100);%round(STA(1,2)/STA(2,2)-1)

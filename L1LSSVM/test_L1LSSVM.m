@@ -1,7 +1,7 @@
 % Load data;
 close all;
 clear;clc;
-run('../load_data');
+run('../Tools/load_data');
 clear train_data train_label;
 data = test_data;
 label = test_label;

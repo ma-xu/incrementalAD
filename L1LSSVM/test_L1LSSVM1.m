@@ -5,7 +5,7 @@
 % Load data;
 close all;
 clear;clc;
-run('../load_data');
+run('../Tools/load_data');
 clear train_data train_label;
 data = test_data;
 label = test_label;
@@ -29,7 +29,7 @@ clear data label e;
 % get the rate of each class
 % STA Matrix: unique label; conut;rate;
 STA = tabulate(train_label);
-addpath('../smote');
+addpath('../Tools/smote');
 disp("Start smote process");
 SMOTE_data = smote(train_data(train_label==-1,:), 1, 2*100);
 SMOTE_label = -ones(size(SMOTE_data,1),1);

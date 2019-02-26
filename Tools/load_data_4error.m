@@ -12,12 +12,12 @@ Label 4-Disk Failure
 
 %% Import data in Sep
 dataList=[
-    "Data/mat/20110925.mat";
-    "Data/mat/20110924.mat";
-    "Data/mat/20110923.mat";
-    "Data/mat/20110922.mat";
-    "Data/mat/20110921.mat";
-    "Data/mat/20110920.mat";
+    "../Data/mat/20110925.mat";
+    "../Data/mat/20110924.mat";
+    "../Data/mat/20110923.mat";
+    "../Data/mat/20110922.mat";
+    "../Data/mat/20110921.mat";
+    "../Data/mat/20110920.mat";
 ];
 data=[];
 label=[];
