@@ -1,5 +1,6 @@
 
 clear;clc;close all;
+addpath('../Tools/');
 run('../Tools/load_data_4error');
 data=mapminmax(data');
 data=data';
