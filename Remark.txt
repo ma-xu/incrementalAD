@@ -1,0 +1,4 @@
+Remark:
+Date: Mar/5/2019
+1. Initialized model prediect 87%(300) as class2(means error 1).
+	Init the model parameter using standard normal distribution.
