@@ -50,6 +50,6 @@ function [metrics] = MCmetric(Truelabel,Prelabel)
     metrics.specificityList = specificityList;
     metrics.recallList =recallList;
     metrics.precisionList =precisionList;
-    metrics.F1_measureLis =F1_measureList;
+    metrics.F1_measureList =F1_measureList;
     
 end
