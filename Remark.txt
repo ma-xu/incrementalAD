@@ -6,3 +6,10 @@ Date: Mar/5/2019
 Meeting: Mar/7/2019
 1. predicted anomaly error rollback
 2. Init -> normal; (clustering methods)
+3. Plot F1, ...
+	Result. 1. result shows in result_back_predict_negative_error_300.eps
+			   xls in incrementalAD/Experiments/compare_Mar_5.ods.
+			   It will increase and drop times, then predict all to postive.
+			2. not cluster, another easy way.
+				result shown as result_back_predict_negative_newinit.eps
+			3.
