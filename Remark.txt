@@ -13,3 +13,14 @@ Meeting: Mar/7/2019
 			2. not cluster, another easy way.
 				result shown as result_back_predict_negative_newinit.eps
 			3.
+
+Meeting: Mar/19/2019
+    0. notice the batch size.
+    1. plot 2 class results
+    2. chose class plot, not metrics plot.
+    3. ROC curve.
+    
+    Result:
+      1.
+      3.
+
