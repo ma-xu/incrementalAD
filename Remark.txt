@@ -34,5 +34,7 @@ Meeting: Mar/19/2019
             The result is similar to N. 
             result and figure: excute /L1LS/test_L1LS_Back_negative.m
       	 postive error negative error:
+      	    Don't know how to calculate TP,TN,FP,FN
       3. ROC is not for distance based algorithms, especially for possibility based algorithmsbut we can still use it as a generalization.[min:step:max]
+      We save the ROC curve as gif, and show the AUC value in the code.
 
