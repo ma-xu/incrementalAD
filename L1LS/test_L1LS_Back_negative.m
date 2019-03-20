@@ -15,7 +15,7 @@ clear train_data train_label test_data test_label;
 
 
 Prone_normal=true;
-Save_GIF = true;
+Save_GIF = false;
 data=mapminmax(data');
 data=data';
 
@@ -138,6 +138,7 @@ sorted_vector_W = sort(vector_W,'descend');
 %% Plot ROC curve.
 clearvars -except ROC_distance test_label Save_GIF;
 close all;
+AUCList = [];
 for i=1:size(ROC_distance,2)
     
     test_distacne = ROC_distance(:,i);
@@ -146,8 +147,12 @@ for i=1:size(ROC_distance,2)
     test_distacne = test_distacne';
     
     
-    [X,Y] = perfcurve(test_label,test_distacne,1);
+    [X,Y,~,AUC] = perfcurve(test_label,test_distacne,1);
+    AUCList = [AUCList;AUC];
     plot(X,Y);
+    title(['ROC Curve for epoch ',num2str(i)]);
+    xlabel('False Positive Rate');
+    ylabel('True Positive Rate');
     
     % save tmp image for gif
     if Save_GIF
@@ -160,11 +165,14 @@ end
 if Save_GIF
     for j = 1:size(ROC_distance,2)
         A = imread(sprintf('image/%d.bmp',j));
-        [I.map] = rgb2ind(A,256);
+       
+        [I,map] = rgb2ind(A,256);
         if(j==1)
-            imwrite(I,map,'ROCall.gif','DelayTime',0.2,'LoopCount',Inf)
+            imwrite(I,map,'ROCall.gif','DelayTime',0.5,'LoopCount',0)
         else
-            imwrite(I,map,'ROCall.gif','WriteMode','append','DelayTime',0.2)
+            imwrite(I,map,'ROCall.gif','WriteMode','append','DelayTime',0.5)
         end
+        
     end
 end
+AUCList

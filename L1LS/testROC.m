@@ -4,7 +4,7 @@ y = (1:100)'>50;             % versicolor=0, virginica=1
 b = glmfit(x,y,'binomial');  % logistic regression
 p = glmval(b,x,'logit');     % get fitted probabilities for scores
 
-[X,Y] = perfcurve(species(51:end,:),p,'virginica');
+[X,Y,~,AUC] = perfcurve(species(51:end,:),p,'virginica');
 plot(X,Y)
 xlabel('False positive rate'); ylabel('True positive rate')
 title('ROC for classification by logistic regression')
