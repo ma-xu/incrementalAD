@@ -3,7 +3,7 @@ function [w] = L1LS(X,Y,C,w,lr)
     %derivation:
     % -2X'*(Y-Xw)+C*sign(w)
     
-    repeat_time=10;
+    repeat_time=3;%10
     X_copy = X;
     Y_copy=Y;
     lr_copy=lr;
