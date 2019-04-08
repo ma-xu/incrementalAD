@@ -2,7 +2,7 @@
 % Plot for each class.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 clear;clc;close all;
-load('resultList.mat');
+load('resultList_300.mat');
 AccuracyList = [];
 SensitivityList = [];
 SepecificityList = [];
@@ -32,70 +32,84 @@ for i =1:length(ResultList)
     
 end
 
+SensitivityList(SensitivityList==0)=1;
+SepecificityList(SepecificityList==0)=1;
+
+
 % Class 1
 figure;
-plot(AccuracyList,':');
+plot(AccuracyList,'-.');
 hold on;
-plot(NegNumList/100,':');
-hold on;
-plot(SensitivityList(:,1));
-plot(SepecificityList(:,1));
-plot(PrecisionList(:,1));
-plot(F1List(:,1));
-legend({'accuracy','predict negative rate','Sensitivity','Sepecificity','PrecisionList','F1List'});
-title('Class 1');
+%plot(NegNumList/300,':');
+%hold on;
+plot(SensitivityList(:,1),'-+');
+plot(SepecificityList(:,1),'-*');
+%plot(PrecisionList(:,1));
+%plot(F1List(:,1));
+legend({'accuracy','Sensitivity','Specificity'},'Location','southeast');
+title('Normal Records');
+xlabel('Epochs','FontSize',14);
+ylabel('Metric values','FontSize',14);
 
 % Class2
 figure;
-plot(AccuracyList,':');
+plot(AccuracyList,'-.');
 hold on;
-plot(NegNumList/100,':');
-hold on;
-plot(SensitivityList(:,2));
-plot(SepecificityList(:,2));
-plot(PrecisionList(:,2));
-plot(F1List(:,2));
-legend({'accuracy','predict negative rate','Sensitivity','Sepecificity','PrecisionList','F1List'});
-title('Class 2');
+%plot(NegNumList/300,':');
+%hold on;
+plot(SensitivityList(:,2),'-+');
+plot(SepecificityList(:,2),'-*');
+%plot(PrecisionList(:,2));
+%plot(F1List(:,2));
+legend({'accuracy','Sensitivity','Specificity'},'Location','southeast');
+title('Memory Anomaly');
+xlabel('Epochs','FontSize',14);
+ylabel('Metric values','FontSize',14);
 
 % Class3
 figure;
-plot(AccuracyList,':');
+plot(AccuracyList,'-.');
 hold on;
-plot(NegNumList/100,':');
-hold on;
-plot(SensitivityList(:,3));
-plot(SepecificityList(:,3));
-plot(PrecisionList(:,3));
-plot(F1List(:,3));
-legend({'accuracy','predict negative rate','Sensitivity','Sepecificity','PrecisionList','F1List'});
-title('Class 3');
+%plot(NegNumList/300,':');
+%hold on;
+plot(SensitivityList(:,3),'-+');
+plot(SepecificityList(:,3),'-*');
+%plot(PrecisionList(:,3));
+%plot(F1List(:,3));
+legend({'accuracy','Sensitivity','Specificity'},'Location','southeast');
+title('CPU Anomaly');
+xlabel('Epochs','FontSize',14);
+ylabel('Metric values','FontSize',14);
 
 % Class4
 figure;
-plot(AccuracyList,':');
+plot(AccuracyList,'-.');
 hold on;
-plot(NegNumList/100,':');
-hold on;
-plot(SensitivityList(:,4));
-plot(SepecificityList(:,4));
-plot(PrecisionList(:,4));
-plot(F1List(:,4));
-legend({'accuracy','predict negative rate','Sensitivity','Sepecificity','PrecisionList','F1List'});
-title('Class 4');
+%plot(NegNumList/300,':');
+%hold on;
+plot(SensitivityList(:,4),'-+');
+plot(SepecificityList(:,4),'-*');
+%plot(PrecisionList(:,4));
+%plot(F1List(:,4));
+legend({'accuracy','Sensitivity','Specificity'},'Location','southeast');
+title('Network Anomaly');
+xlabel('Epochs','FontSize',14);
+ylabel('Metric values','FontSize',14);
 
-% Class4
+% Class5
 figure;
-plot(AccuracyList,':');
+plot(AccuracyList,'-.');
 hold on;
-plot(NegNumList/100,':');
-hold on;
-plot(SensitivityList(:,5));
-plot(SepecificityList(:,5));
-plot(PrecisionList(:,5));
-plot(F1List(:,5));
-legend({'accuracy','predict negative rate','Sensitivity','Sepecificity','PrecisionList','F1List'});
-title('Class 5');
+%plot(NegNumList/300,':');
+%hold on;
+plot(SensitivityList(:,5),'-+');
+plot(SepecificityList(:,5),'-*');
+%plot(PrecisionList(:,5));
+%plot(F1List(:,5));
+legend({'accuracy','Sensitivity','Specificity'},'Location','southeast');
+title('Disk Anomaly');
+xlabel('Epochs','FontSize',14);
+ylabel('Metric values','FontSize',14);
 
 
 

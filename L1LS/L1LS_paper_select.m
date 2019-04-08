@@ -15,7 +15,8 @@ clear train_data train_label test_data test_label;
 
 
 Prone_normal=true;
-Save_GIF = false;
+IF_SELF=true;
+IF_SMOTE = false;
 data=mapminmax(data');
 data=data';
 
@@ -26,8 +27,34 @@ train_data=data(1:end-1000,:);
 train_label = label(1:end-1000,:);
 clear data label;
 
+
+
+if IF_SMOTE
+    % get the rate of each class
+    % STA Matrix: unique label; conut;rate;
+    %STA = tabulate(train_label);
+    addpath('../Tools/smote');
+    disp("Start smote process");
+    disp("SMOTE on anomaly type 2");
+    SMOTE2 = smote(train_data(train_label==-1,:), 3,100);%round(STA(1,2)/STA(2,2)-1)
+    SMOTE2_label = -1*ones(size(SMOTE2,1),1);
+
+
+    train_data=[train_data;SMOTE2;];
+    train_label=[train_label;SMOTE2_label;];
+    % random data order
+    rand('state',111);
+    rand_order=randperm(size(train_data,1));
+    train_data=train_data(rand_order,:);
+    train_label=train_label(rand_order,:); 
+end
+
+
+
+
+
 %label(label==-1)=2;
-C=0.1;
+C=10;
 lr=0.1;
 batch_size=300;
 
@@ -73,7 +100,11 @@ for i =1:parts
     NegNumbList = [NegNumbList;length(index)];
     x_train = x(index,:);
     y_train = y(index,:);
-    [w] = L1LS(x_train,y_train,C,w,lr);
+    if IF_SELF
+        [w] = L1LS(x_train,y_train,C,w,lr);
+    else
+        [w] = L1LS(x,y,C,w,lr);
+    end
     
     pred_test_label = double(test_data*w>0);
     pred_test_label(pred_test_label==0,:)=-1;
@@ -88,95 +119,10 @@ for i =1:parts
     ROC_distance = [ROC_distance test_distacne];
    
 end
+vector_W = abs(w);
+[sorted_vector_W,index ]= sort(vector_W,'descend');
+load('../Data/mat/titles.mat');
+titles = titles(index);
+top_20_weight=sorted_vector_W(1:20)
+top_20_title = titles(1:20)
 
-
-%% for plot
-AccuracyList = [];
-SensitivityList = [];
-SepecificityList = [];
-RecallList = [];
-PrecisionList = [];
-F1List = [];
-NegNumList = [];
-for i =1:length(ResultList)
-    Result = ResultList(i);
-    Accuracy = Result.accuracy;
-    Sensitivity = Result.sensitivity';
-    Sepecificity = Result.specificity';
-    Recall = Result.recall';
-    Precision = Result.precision';
-    F1 = Result.F1_measure';
-    NegNumber = Result.NegNumber;
-    i
-    
-    AccuracyList=[AccuracyList;Accuracy];
-    SensitivityList = [SensitivityList;Sensitivity];
-    SepecificityList = [SepecificityList;Sepecificity];
-    RecallList = [RecallList;Recall];
-    PrecisionList = [PrecisionList;Precision];
-    F1List = [F1List;F1];
-    NegNumList = [NegNumList;NegNumber];
-    
-end
-
-plot(accur)
-
-
-
-accuracyList
-plot(accuracyList,':');
-hold on;
-plot(NegNumbList/batch_size,':');
-plot(SensitivityList(:,1));
-plot(SepecificityList(:,1));
-plot(PrecisionList(:,1));
-plot(F1List(:,1));
-legend({'accuracy','predict negative rate','Sensitivity','Sepecificity','PrecisionList','F1List'});
-
-%validate the row sparsity
-vector_W = sum(abs(w).^2,2).^(1/2);
-sorted_vector_W = sort(vector_W,'descend');
-
-
-
-%% Plot ROC curve.
-clearvars -except ROC_distance test_label Save_GIF;
-close all;
-AUCList = [];
-for i=1:size(ROC_distance,2)
-    
-    test_distacne = ROC_distance(:,i);
-    % normalize to [0,1]
-    test_distacne = mapminmax(test_distacne',0,1);
-    test_distacne = test_distacne';
-    
-    
-    [X,Y,~,AUC] = perfcurve(test_label,test_distacne,1);
-    AUCList = [AUCList;AUC];
-    plot(X,Y);
-    title(['ROC Curve for epoch ',num2str(i)]);
-    xlabel('False Positive Rate');
-    ylabel('True Positive Rate');
-    
-    % save tmp image for gif
-    if Save_GIF
-        print(1,'-dbmp',sprintf('image/%d',i));
-    end
-    
-    close;
-    
-end
-if Save_GIF
-    for j = 1:size(ROC_distance,2)
-        A = imread(sprintf('image/%d.bmp',j));
-       
-        [I,map] = rgb2ind(A,256);
-        if(j==1)
-            imwrite(I,map,'ROCall.gif','DelayTime',0.5,'LoopCount',0)
-        else
-            imwrite(I,map,'ROCall.gif','WriteMode','append','DelayTime',0.5)
-        end
-        
-    end
-end
-AUCList

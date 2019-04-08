@@ -55,7 +55,7 @@ NegNumbList = [];
 parts=ceil(size(train_data,1)/batch_size);
 ends = batch_size*(1:parts)';
 ends(end,1)=size(train_data,1);
-
+ResultList=[];
 for i =1:parts
     i
     x=train_data((i-1)*batch_size+1:ends(i,1),:);
@@ -72,7 +72,8 @@ for i =1:parts
     
     vector_pred_test_label = convert_vector(test_data*W);
     result = MCmetric(vector_label,vector_pred_test_label);
-
+    result.NegNumber = length(index);
+    ResultList = [ResultList;result];
  
     accuracyList=[accuracyList;result.accuracy];
    

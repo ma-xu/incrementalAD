@@ -49,7 +49,7 @@ train_data=train_data(rand_order,:);
 train_label=train_label(rand_order,:); 
 %}
 
-
+\subsubsection{L1LS study}
 % convert column vector label to one-hot matrix label
 test_label=convert_one_hot(test_label);
 train_label=convert_one_hot(train_label);

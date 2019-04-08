@@ -3,7 +3,7 @@
 % 2. 2 classes result.
 % 3. Follow the predicted negative rollback manner. 
 % 4. Init model result is not added to the resultList
-% Date 2019/3/7
+% Date 2019/4/2
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 clear;clc;close all;
 addpath('../Tools/');
@@ -14,8 +14,9 @@ label = test_label;
 clear train_data train_label test_data test_label;
 
 
-Prone_normal=true;
+Prone_normal=false;
 Save_GIF = false;
+IF_SELF=false;
 data=mapminmax(data');
 data=data';
 
@@ -73,7 +74,11 @@ for i =1:parts
     NegNumbList = [NegNumbList;length(index)];
     x_train = x(index,:);
     y_train = y(index,:);
-    [w] = L1LS(x_train,y_train,C,w,lr);
+    if IF_SELF
+        [w] = L1LS(x_train,y_train,C,w,lr);
+    else
+        [w] = L1LS(x,y,C,w,lr);
+    end
     
     pred_test_label = double(test_data*w>0);
     pred_test_label(pred_test_label==0,:)=-1;
@@ -107,8 +112,7 @@ for i =1:length(ResultList)
     Precision = Result.precision';
     F1 = Result.F1_measure';
     NegNumber = Result.NegNumber;
-    i
-    
+  
     AccuracyList=[AccuracyList;Accuracy];
     SensitivityList = [SensitivityList;Sensitivity];
     SepecificityList = [SepecificityList;Sepecificity];
@@ -119,6 +123,18 @@ for i =1:length(ResultList)
     
 end
 
+plot(accuracyList,'-.');
+hold on;
+plot(SensitivityList,'-+');
+hold on;
+plot(SepecificityList,'-*');
+hold on;
+legend(["Accuracy","Sensitivity","Specificity"]);
+xlabel('Epochs','FontSize',14);
+ylabel('Metric values','FontSize',14);
+
+
+%{
 accuracyList
 plot(accuracyList,':');
 hold on;
@@ -150,16 +166,16 @@ for i=1:size(ROC_distance,2)
     [X,Y,~,AUC] = perfcurve(test_label,test_distacne,1);
     AUCList = [AUCList;AUC];
     plot(X,Y);
-    title(['Epoch ',num2str(i)],'FontSize',16);
-    xlabel('False Positive Rate','FontSize',14);
-    ylabel('True Positive Rate','FontSize',14);
+    title(['ROC Curve for epoch ',num2str(i)]);
+    xlabel('False Positive Rate');
+    ylabel('True Positive Rate');
     
     % save tmp image for gif
     if Save_GIF
         print(1,'-dbmp',sprintf('image/%d',i));
     end
     
-    close;
+    close;SensitivityList(SensitivityList==0)=1
     
 end
 if Save_GIF
@@ -176,6 +192,4 @@ if Save_GIF
     end
 end
 AUCList
-plot(AUCList,'-o');
-xlabel('Epoch','FontSize',14);
-ylabel('AUC Value','FontSize',14);
+%}
